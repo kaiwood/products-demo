@@ -2,8 +2,12 @@
   <table>
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Price</th>
+        <th>
+          <span @click="$emit('sort', 'name')">Name</span>
+        </th>
+        <th>
+          <span @click="$emit('sort', 'price')">Price</span>
+        </th>
         <th>Image</th>
       </tr>
     </thead>

@@ -2,7 +2,7 @@
   <div id="app">
     <h1>Products</h1>
 
-    <product-table :products="products"></product-table>
+    <product-table :products="products" @sort="sort"></product-table>
 
     <product-pagination
       :current-page="currentPage"
@@ -30,7 +30,9 @@ export default {
       lastPage: 0,
       from: 0,
       to: 0,
-      total: 0
+      total: 0,
+      sortDirectionName: undefined,
+      sortDirectionPrice: undefined
     };
   },
 
@@ -54,6 +56,52 @@ export default {
       this.total = json.total;
 
       // window.scrollTo(0, 0);
+    },
+
+    sort(row) {
+      switch (true) {
+        case row === "name" && this.sortDirectionName === "asc":
+          this.sortByNameDesc();
+          this.sortDirectionName = "desc";
+          break;
+        case row === "name":
+          this.sortByNameAsc();
+          this.sortDirectionName = "asc";
+          break;
+
+        case row === "price" && this.sortDirectionPrice === "asc":
+          this.sortByPriceDesc();
+          this.sortDirectionPrice = "desc";
+          break;
+        case row === "price":
+          this.sortByPriceAsc();
+          this.sortDirectionPrice = "asc";
+          break;
+      }
+    },
+
+    sortByPriceAsc() {
+      this.products = this.products.sort((a, b) => a.price - b.price);
+    },
+
+    sortByPriceDesc() {
+      this.products = this.products.sort((a, b) => b.price - a.price);
+    },
+
+    sortByNameAsc() {
+      this.products = this.products.sort((a, b) => {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
+      });
+    },
+
+    sortByNameDesc() {
+      this.products = this.products.sort((a, b) => {
+        if (a.name < b.name) return 1;
+        if (a.name > b.name) return -1;
+        return 0;
+      });
     }
   }
 };
