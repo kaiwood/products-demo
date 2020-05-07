@@ -11,13 +11,13 @@
     <tbody>
       <tr v-for="product in products" :key="product.id">
         <td>
-          <product-name :name="product.name"></product-name>
+          <product-table-name :name="product.name"></product-table-name>
         </td>
         <td>
-          <product-price :price="product.price"></product-price>
+          <product-table-price :price="product.price"></product-table-price>
         </td>
         <td>
-          <product-image :src="product.images[0].url"></product-image>
+          <product-table-image :src="product.images[0].url"></product-table-image>
         </td>
       </tr>
     </tbody>
@@ -25,17 +25,17 @@
 </template>
 
 <script>
-import ProductName from "./ProductName.vue";
-import ProductPrice from "./ProductPrice.vue";
-import ProductImage from "./ProductImage.vue";
+import ProductTableName from "./ProductTableName.vue";
+import ProductTablePrice from "./ProductTablePrice.vue";
+import ProductTableImage from "./ProductTableImage.vue";
 
 export default {
   name: "ProductTable",
   props: ["products"],
   components: {
-    ProductName,
-    ProductPrice,
-    ProductImage
+    ProductTableName,
+    ProductTablePrice,
+    ProductTableImage
   }
 };
 </script>
