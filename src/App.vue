@@ -2,7 +2,12 @@
   <div id="app">
     <h1>Products</h1>
 
-    <product-table :products="products" @sort="sort"></product-table>
+    <product-table
+      :products="products"
+      :sort-direction-name="sortDirectionName"
+      :sort-direction-price="sortDirectionPrice"
+      @sort="sort"
+    ></product-table>
 
     <product-pagination
       :current-page="currentPage"
@@ -55,7 +60,8 @@ export default {
       this.to = json.to;
       this.total = json.total;
 
-      // window.scrollTo(0, 0);
+      this.sortDirectionName = undefined;
+      this.sortDirectionPrice = undefined;
     },
 
     sort(row) {
@@ -63,19 +69,23 @@ export default {
         case row === "name" && this.sortDirectionName === "asc":
           this.sortByNameDesc();
           this.sortDirectionName = "desc";
+          this.sortDirectionPrice = undefined;
           break;
         case row === "name":
           this.sortByNameAsc();
           this.sortDirectionName = "asc";
+          this.sortDirectionPrice = undefined;
           break;
 
         case row === "price" && this.sortDirectionPrice === "asc":
           this.sortByPriceDesc();
           this.sortDirectionPrice = "desc";
+          this.sortDirectionName = undefined;
           break;
         case row === "price":
           this.sortByPriceAsc();
           this.sortDirectionPrice = "asc";
+          this.sortDirectionName = undefined;
           break;
       }
     },

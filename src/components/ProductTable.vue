@@ -2,10 +2,10 @@
   <table>
     <thead>
       <tr>
-        <th class="name-column" @click="$emit('sort', 'name')">
+        <th :class="nameClasses" @click="$emit('sort', 'name')">
           <span id="product-name">Name</span>
         </th>
-        <th class="price-column" @click="$emit('sort', 'price')">
+        <th :class="priceClasses" @click="$emit('sort', 'price')">
           <span id="product-price">Price</span>
         </th>
         <th></th>
@@ -35,11 +35,37 @@ import ProductTableImage from "./ProductTableImage.vue";
 
 export default {
   name: "ProductTable",
-  props: ["products"],
+  props: ["products", "sortDirectionName", "sortDirectionPrice"],
   components: {
     ProductTableName,
     ProductTablePrice,
     ProductTableImage
+  },
+
+  computed: {
+    nameClasses() {
+      let classes = "name-column";
+
+      if (this.sortDirectionName === "asc") {
+        classes += " up";
+      } else if (this.sortDirectionName === "desc") {
+        classes += " down";
+      }
+
+      return classes;
+    },
+
+    priceClasses() {
+      let classes = "price-column";
+
+      if (this.sortDirectionPrice === "asc") {
+        classes += " up";
+      } else if (this.sortDirectionPrice === "desc") {
+        classes += " down";
+      }
+
+      return classes;
+    }
   }
 };
 </script>
@@ -70,10 +96,36 @@ td {
 
 .name-column {
   padding-left: 0.5rem;
+  cursor: pointer;
 }
 
 .price-column {
   text-align: right;
   padding-right: 0.5em;
+  cursor: pointer;
+}
+
+th.name-column.up::after {
+  content: "▲";
+  float: right;
+  margin-right: 5px;
+}
+
+th.name-column.down::after {
+  content: "▼";
+  float: right;
+  margin-right: 5px;
+}
+
+th.price-column.up:after {
+  content: "▲";
+  float: left;
+  margin-left: 5px;
+}
+
+th.price-column.down:after {
+  content: "▼";
+  float: left;
+  margin-left: 5px;
 }
 </style>
