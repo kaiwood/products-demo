@@ -3,10 +3,10 @@
     <thead>
       <tr>
         <th>
-          <span @click="$emit('sort', 'name')">Name</span>
+          <span id="product-name" @click="$emit('sort', 'name')">Name</span>
         </th>
         <th>
-          <span @click="$emit('sort', 'price')">Price</span>
+          <span id="product-price" @click="$emit('sort', 'price')">Price</span>
         </th>
         <th>Image</th>
       </tr>

@@ -1,5 +1,5 @@
 <template>
-  <img src="../assets/lorempixel.jpg" />
+  <img alt="Product image" src="../assets/lorempixel.jpg" />
 </template>
 
 <script>
