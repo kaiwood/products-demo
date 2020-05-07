@@ -6,7 +6,7 @@
           <span id="product-name">Name</span>
         </th>
         <th :class="priceClasses" @click="$emit('sort', 'price')">
-          <span id="product-price">Price</span>
+          <span id="product-price">Preis</span>
         </th>
         <th></th>
       </tr>

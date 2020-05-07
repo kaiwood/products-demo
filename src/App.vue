@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Products</h1>
+    <h1>Produkte</h1>
 
     <product-table
       :products="products"
