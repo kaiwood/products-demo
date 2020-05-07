@@ -72,10 +72,4 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
-
-ul,
-li {
-  margin-left: 0;
-  padding-left: 0;
-}
 </style>

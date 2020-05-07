@@ -33,6 +33,8 @@ export default {
 ul,
 li {
   display: inline;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 li {
