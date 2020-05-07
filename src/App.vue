@@ -2,29 +2,7 @@
   <div id="app">
     <h1>Products</h1>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Image</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr v-for="product in products" :key="product.id">
-          <td>
-            <product-name :name="product.name"></product-name>
-          </td>
-          <td>
-            <product-price :price="product.price"></product-price>
-          </td>
-          <td>
-            <product-image :src="product.images[0].url"></product-image>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <product-table :products="products"></product-table>
 
     <product-pagination
       :current-page="currentPage"
@@ -38,14 +16,12 @@
 </template>
 
 <script>
-import ProductName from "./components/ProductName.vue";
-import ProductPrice from "./components/ProductPrice.vue";
-import ProductImage from "./components/ProductImage.vue";
+import ProductTable from "./components/ProductTable.vue";
 import ProductPagination from "./components/ProductPagination.vue";
 
 export default {
   name: "App",
-  components: { ProductName, ProductPrice, ProductImage, ProductPagination },
+  components: { ProductTable, ProductPagination },
 
   data() {
     return {
@@ -101,13 +77,5 @@ ul,
 li {
   margin-left: 0;
   padding-left: 0;
-}
-
-table {
-  width: 100%;
-}
-
-th {
-  text-align: left;
 }
 </style>
