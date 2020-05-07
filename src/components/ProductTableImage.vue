@@ -11,6 +11,9 @@ export default {
 
 <style scoped>
 img {
-  height: 50px;
+  height: 100px;
+  display: block;
+  margin: 0 auto 1rem auto;
+  border-radius: 10px;
 }
 </style>

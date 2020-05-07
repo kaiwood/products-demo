@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="pagination">
     <ul>
       <li v-for="page in allPages" :key="page">
-        <span v-if="page == currentPage">{{page}}</span>
-        <a v-else href="#" @click.prevent="navigateTo(page)">{{page}}</a>
+        <span v-if="page == currentPage" class="page-num">{{page}}</span>
+        <a v-else href="#" @click.prevent="navigateTo(page)" class="page-num">{{page}}</a>
       </li>
     </ul>
     <span>{{from}} bis {{to}} von {{total}}</span>
@@ -39,5 +39,23 @@ li {
 
 li {
   margin-right: 1rem;
+}
+
+.pagination {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.page-num {
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  text-decoration: none;
+  color: black;
+}
+
+span.page-num {
+  border-color: white;
 }
 </style>
