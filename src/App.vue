@@ -2,11 +2,14 @@
   <div id="app">
     <h1>Produkte</h1>
 
+    <product-preview :product="selectedProduct"></product-preview>
+
     <product-table
       :products="products"
       :sort-direction-name="sortDirectionName"
       :sort-direction-price="sortDirectionPrice"
       @sort="sort"
+      @select="selectProduct"
     ></product-table>
 
     <product-pagination
@@ -21,12 +24,13 @@
 </template>
 
 <script>
+import ProductPreview from "./components/ProductPreview.vue";
 import ProductTable from "./components/ProductTable.vue";
 import ProductPagination from "./components/ProductPagination.vue";
 
 export default {
   name: "App",
-  components: { ProductTable, ProductPagination },
+  components: { ProductPreview, ProductTable, ProductPagination },
 
   data() {
     return {
@@ -37,7 +41,8 @@ export default {
       to: 0,
       total: 0,
       sortDirectionName: undefined,
-      sortDirectionPrice: undefined
+      sortDirectionPrice: undefined,
+      selectedProduct: undefined
     };
   },
 
@@ -112,6 +117,10 @@ export default {
         if (a.name > b.name) return -1;
         return 0;
       });
+    },
+
+    selectProduct(id) {
+      this.selectedProduct = this.products.filter(p => p.id === id)[0];
     }
   }
 };

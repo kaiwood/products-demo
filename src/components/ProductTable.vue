@@ -8,20 +8,16 @@
         <th :class="priceClasses" @click="$emit('sort', 'price')">
           <span id="product-price">Preis</span>
         </th>
-        <th></th>
       </tr>
     </thead>
 
     <tbody>
-      <tr v-for="product in products" :key="product.id">
+      <tr v-for="product in products" :key="product.id" @click="$emit('select', product.id)">
         <td class="name-column">
           <product-table-name :name="product.name"></product-table-name>
         </td>
         <td class="price-column">
           <product-table-price :price="product.price"></product-table-price>
-        </td>
-        <td>
-          <product-table-image :src="product.images[0].url"></product-table-image>
         </td>
       </tr>
     </tbody>
@@ -31,15 +27,13 @@
 <script>
 import ProductTableName from "./ProductTableName.vue";
 import ProductTablePrice from "./ProductTablePrice.vue";
-import ProductTableImage from "./ProductTableImage.vue";
 
 export default {
   name: "ProductTable",
   props: ["products", "sortDirectionName", "sortDirectionPrice"],
   components: {
     ProductTableName,
-    ProductTablePrice,
-    ProductTableImage
+    ProductTablePrice
   },
 
   computed: {
@@ -73,6 +67,7 @@ export default {
 <style scoped>
 table {
   width: 100%;
+  border-spacing: 0;
 }
 
 thead::after {
@@ -84,7 +79,6 @@ thead::after {
 th {
   background: lightgrey;
   border: 0;
-  border-radius: 5px;
   text-align: left;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -92,6 +86,10 @@ th {
 
 td {
   vertical-align: top;
+}
+
+tr:hover {
+  background: lightgrey;
 }
 
 .name-column {
@@ -107,25 +105,21 @@ td {
 
 th.name-column.up::after {
   content: "▲";
-  float: right;
-  margin-right: 5px;
+  margin-left: 0.5rem;
 }
 
 th.name-column.down::after {
   content: "▼";
-  float: right;
-  margin-right: 5px;
+  margin-left: 0.5rem;
 }
 
-th.price-column.up:after {
+th.price-column.up:before {
   content: "▲";
-  float: left;
-  margin-left: 5px;
+  margin-right: 0.5rem;
 }
 
-th.price-column.down:after {
+th.price-column.down:before {
   content: "▼";
-  float: left;
-  margin-left: 5px;
+  margin-right: 0.5rem;
 }
 </style>
