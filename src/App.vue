@@ -53,7 +53,7 @@ export default {
   methods: {
     async navigateTo(page = 1) {
       const response = await fetch(
-        `http://localhost:3000/api/products?page=${page}`
+        `${process.env.VUE_APP_API_URL}?page=${page}`
       );
 
       const json = await response.json();
