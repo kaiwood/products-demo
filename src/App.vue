@@ -2,59 +2,55 @@
   <div id="app">
     <h1>Produkte</h1>
 
-    <product-preview :product="selectedProduct"></product-preview>
+    <product-sorter @sortByName="sortByName" @sortByPrice="sortByPrice" />
 
-    <product-table
-      :products="products"
-      :sort-direction-name="sortDirectionName"
-      :sort-direction-price="sortDirectionPrice"
-      @sort="sort"
-      @select="selectProduct"
-    ></product-table>
+    <product-listing :products="products" />
 
-    <product-pagination
-      :current-page="currentPage"
-      :last-page="lastPage"
+    <product-navigation
+      :prev-page="prevPage"
+      :next-page="nextPage"
       :from="from"
       :to="to"
       :total="total"
-      @navigate="navigateTo"
-    ></product-pagination>
+      @navigateTo="navigateTo"
+    ></product-navigation>
   </div>
 </template>
 
 <script>
-import ProductPreview from "./components/ProductPreview.vue";
-import ProductTable from "./components/ProductTable.vue";
-import ProductPagination from "./components/ProductPagination.vue";
+import ProductSorter from "./components/ProductSorter.vue";
+import ProductListing from "./components/ProductListing.vue";
+import ProductNavigation from "./components/ProductNavigation.vue";
 
 export default {
   name: "App",
-  components: { ProductPreview, ProductTable, ProductPagination },
+  components: {
+    ProductSorter,
+    ProductListing,
+    ProductNavigation
+  },
 
   data() {
     return {
       products: [],
       currentPage: 1,
+      nextPage: undefined,
+      prevPage: undefined,
       lastPage: 0,
       from: 0,
       to: 0,
-      total: 0,
-      sortDirectionName: undefined,
-      sortDirectionPrice: undefined,
-      selectedProduct: undefined
+      total: 0
     };
   },
 
   created() {
-    this.navigateTo(1);
+    const initialUrl = `${process.env.VUE_APP_API_URL}?page=1`;
+    this.navigateTo(initialUrl);
   },
 
   methods: {
-    async navigateTo(page = 1) {
-      const response = await fetch(
-        `${process.env.VUE_APP_API_URL}?page=${page}`
-      );
+    async navigateTo(url) {
+      const response = await fetch(url);
 
       const json = await response.json();
 
@@ -65,62 +61,20 @@ export default {
       this.to = json.to;
       this.total = json.total;
 
-      this.sortDirectionName = undefined;
-      this.sortDirectionPrice = undefined;
+      this.prevPage = json.prev_page_url;
+      this.nextPage = json.next_page_url;
     },
 
-    sort(row) {
-      switch (true) {
-        case row === "name" && this.sortDirectionName === "asc":
-          this.sortByNameDesc();
-          this.sortDirectionName = "desc";
-          this.sortDirectionPrice = undefined;
-          break;
-        case row === "name":
-          this.sortByNameAsc();
-          this.sortDirectionName = "asc";
-          this.sortDirectionPrice = undefined;
-          break;
-
-        case row === "price" && this.sortDirectionPrice === "asc":
-          this.sortByPriceDesc();
-          this.sortDirectionPrice = "desc";
-          this.sortDirectionName = undefined;
-          break;
-        case row === "price":
-          this.sortByPriceAsc();
-          this.sortDirectionPrice = "asc";
-          this.sortDirectionName = undefined;
-          break;
-      }
-    },
-
-    sortByPriceAsc() {
+    sortByPrice() {
       this.products = this.products.sort((a, b) => a.price - b.price);
     },
 
-    sortByPriceDesc() {
-      this.products = this.products.sort((a, b) => b.price - a.price);
-    },
-
-    sortByNameAsc() {
+    sortByName() {
       this.products = this.products.sort((a, b) => {
         if (a.name < b.name) return -1;
         if (a.name > b.name) return 1;
         return 0;
       });
-    },
-
-    sortByNameDesc() {
-      this.products = this.products.sort((a, b) => {
-        if (a.name < b.name) return 1;
-        if (a.name > b.name) return -1;
-        return 0;
-      });
-    },
-
-    selectProduct(id) {
-      this.selectedProduct = this.products.filter(p => p.id === id)[0];
     }
   }
 };
@@ -135,8 +89,9 @@ body {
 }
 
 #app {
-  max-width: 1000px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 1rem;
 }
 </style>

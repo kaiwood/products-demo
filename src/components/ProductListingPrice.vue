@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "ProductPrice",
+  name: "ProductListingPrice",
   props: ["price"],
 
   methods: {
