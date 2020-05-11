@@ -24,6 +24,7 @@ export default {
 <style scoped>
 div {
   height: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
 label {
