@@ -17,15 +17,7 @@
 <script>
 export default {
   name: "ProductPagination",
-  props: [
-    "currentPage",
-    "nextPage",
-    "prevPage",
-    "lastPage",
-    "from",
-    "to",
-    "total"
-  ],
+  props: ["nextPage", "prevPage", "from", "to", "total"],
 
   computed: {
     allPages() {
