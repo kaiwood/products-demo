@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import ProductSorter from "./components/ProductSorter.vue";
 import ProductListing from "./components/ProductListing.vue";
 import ProductNavigation from "./components/ProductNavigation.vue";
@@ -50,9 +51,7 @@ export default {
 
   methods: {
     async navigateTo(url) {
-      const response = await fetch(url);
-
-      const json = await response.json();
+      const json = (await axios.get(url)).data;
 
       this.products = json.data;
       this.currentPage = json.current_page;
