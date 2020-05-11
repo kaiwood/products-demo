@@ -42,6 +42,10 @@ export default {
   height: 5rem;
 }
 
+.button {
+  background: white;
+}
+
 button {
   background: white;
   border: 1px solid blueviolet;
