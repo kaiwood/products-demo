@@ -62,6 +62,8 @@ export default {
 
       this.prevPage = json.prev_page_url;
       this.nextPage = json.next_page_url;
+
+      window.scrollTo(0, 0);
     },
 
     sortByPrice() {

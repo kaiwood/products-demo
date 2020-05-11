@@ -2,7 +2,7 @@
   <div>
     <div v-for="product in products" :key="product.id" class="product">
       <div class="image">
-        <img :src="product.images[0].url" />
+        <img src="../assets/lorempixel.jpg" :data-src="product.images[0].url" class="lazy" />
       </div>
 
       <div class="description">
@@ -30,7 +30,48 @@ import ProductListingPrice from "./ProductListingPrice";
 
 export default {
   props: ["products"],
-  components: { ProductListingPrice }
+  components: { ProductListingPrice },
+
+  data() {
+    return {
+      scrollListener: undefined
+    };
+  },
+
+  mounted() {
+    this.scrollListener = window.addEventListener("scroll", this.lazyLoad);
+    window.scrollTo(0, 0);
+  },
+
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.lazyLoad);
+  },
+
+  methods: {
+    lazyLoad() {
+      let images = [].slice.call(document.querySelectorAll("img.lazy"));
+      let active = false;
+      if (active === false) {
+        active = true;
+        setTimeout(() => {
+          images.forEach(lazyImage => {
+            if (
+              lazyImage.getBoundingClientRect().top <= window.innerHeight &&
+              lazyImage.getBoundingClientRect().bottom >= 1400 &&
+              getComputedStyle(lazyImage).display !== "none"
+            ) {
+              lazyImage.src = lazyImage.dataset.src;
+              lazyImage.classList.remove("lazy");
+              images = images.filter(image => {
+                return image !== lazyImage;
+              });
+            }
+          });
+          active = false;
+        }, 200);
+      }
+    }
+  }
 };
 </script>
 
